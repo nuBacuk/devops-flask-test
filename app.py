@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Response
 app = Flask(__name__)
 
 counter = 0
@@ -7,9 +7,11 @@ counter = 0
 def visit():
     global counter
     counter = counter + 1
-    return "Visit number %d\n" % counter
+    result = "Visit number %d\n" % counter
+    return Response(result, mimetype='text/plain')
 
 @app.route('/metrics')
 def metrics():
     global counter
-    return "# TYPE hello_world_counter counter\nhello_world_counter %d\n" % counter
+    result = "# TYPE hello_world_counter counter\nhello_world_counter %d\n" % counter
+    return Response(result, mimetype='text/plain')

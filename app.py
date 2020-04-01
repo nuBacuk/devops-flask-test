@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from flask import Flask, Response
 app = Flask(__name__)
 

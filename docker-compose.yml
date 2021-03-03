@@ -1,0 +1,16 @@
+version: "3.2"
+services:
+  aa:
+    restart: always
+    image: test
+    environment:
+      MIGRATIONS: test
+      JAVA_EXEC: javafaketime
+    volumes:
+      - type: bind
+        source: {{ component_etc_path }}
+        target: /etc/justai/accountsadmin
+      - type: bind
+        source: {{ component_log_path }}
+        target: /var/log/justai/accountsadmin
+    network_mode: host

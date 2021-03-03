@@ -5,3 +5,22 @@ services:
     image: nubacuk/devops-flask-test
     ports:
       - 5000:5000
+  prometheus:
+    restart: on-failure
+    image: prom/prometheus:v2.25.0
+    volumes:
+       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+  grafana:
+    restart: on-failure
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    image: grafana/grafana:7.4.3-ubuntu
+    ports:
+      - 3000:3000
+  bench:
+    image: jordi/ab
+    command: ["-n 100000", "-c 100", "http://flask:5000/"]
